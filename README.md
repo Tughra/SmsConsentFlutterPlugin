@@ -16,10 +16,28 @@ SmsConsentAPI automatically requests permission to read the otp code.
 
 ## Getting Started
 
+```yaml
+dependencies:
+  get_sms_otp_consent: <latest version>
+```
+To use the latest changes:
+
+```yaml
+  get_sms_otp_consent:
+    git:
+      url: https://github.com/Tughra/draggable_expandable_fab.git
+      ref: master
+```
 
 
 
 ## Usage
+
+Import this class
+```dart
+import 'package:sms_consent/sms_consent.dart';
+```
+
 ```dart
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
