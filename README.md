@@ -12,7 +12,9 @@ SmsConsentAPI automatically requests permission to read the otp code.
 ## How to install
 
 ### Android
-
+SMS User Consent API rules for sms. 
+The message contains a 4-10 character alphanumeric string with at least one number.
+The message was sent by a phone number that's not in the user's contacts.
 
 ## Getting Started
 
@@ -25,7 +27,7 @@ To use the latest changes:
 ```yaml
   get_sms_otp_consent:
     git:
-      url: https://github.com/Tughra/draggable_expandable_fab.git
+      url: https://github.com/Tughra/SmsConsentFlutterPlugin.git
       ref: master
 ```
 
