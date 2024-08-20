@@ -10,7 +10,7 @@ import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient
-import com.tugra.sms_consent.receiver.SmsReceiver
+import com.tughra.get_sms_otp_consent.receiver.SmsReceiver
 import io.flutter.plugin.common.MethodChannel
 
 
