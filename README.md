@@ -1,4 +1,4 @@
-# sms_consent
+# get_sms_otp_consent
 
 Flutter plugin to provide SMS code autofill support.
 
