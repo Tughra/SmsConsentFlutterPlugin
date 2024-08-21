@@ -6,7 +6,7 @@ If you want to avoid including any 11-character hash strings in your SMS message
 While iOS offers SMS autofill functionality natively, Android requires this package to achieve the same behavior.
 SmsConsentAPI automatically requests permission to read the otp code.
 <p align="center">
-  <img src="https://github.com/Tughra/SmsConsentPlugin/blob/master/example/Screenshot_20240819_164610.png" width="400"/>
+  <img src="https://github.com/Tughra/SmsConsentFlutterPlugin/blob/master/example/Screenshot_20240819_164610.png" width="400"/>
 </p>
 
 ## How to install
@@ -94,4 +94,4 @@ class _MyAppState extends State<MyApp> {
   }
 }
 ```
-When you initialized the "initializeSmsConsent", the method's String parameter (_smsConsentPlugin.initializeSmsConsent("OtpSMS")) has to be same with received Sms Message's title.
+When you initialized the "initializeSmsConsent", the method's String parameter (_smsConsentPlugin.initializeSmsConsent("OtpSMS")) has to be same with received Sms Message's sender name.
