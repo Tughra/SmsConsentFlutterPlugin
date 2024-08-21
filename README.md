@@ -16,7 +16,17 @@ SmsConsentAPI automatically requests permission to read the otp code.
 ### Android
 SMS User Consent API rules for SMS messages:
 The message must contain a 4-10 character alphanumeric code with at least one number and be sent from a phone number not saved in the user's contacts.
-
+```android
+android {
+  ...
+  defaultConfig {
+    ...
+    minSdkVersion 21
+    ...
+  }
+  ...
+}
+```
 ## Getting Started
 
 ```yaml
