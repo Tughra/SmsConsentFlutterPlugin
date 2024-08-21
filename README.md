@@ -49,7 +49,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String? _receivedSms ;
-  final _smsConsentPlugin = SmsConsent();
+  String? _phoneNumber ;
+  final _smsConsentPlugin = GetSmsOtpConsent();
   @override
   void initState() {
     super.initState();
@@ -65,6 +66,14 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: [
               TextButton(onPressed: ()async{
+                //_launchCustomActivity();
+                _phoneNumber= await _smsConsentPlugin.getPhoneNumber();
+                setState(() {
+
+                });
+              }, child: const Text("Get Phone Number")),
+              TextButton(onPressed: ()async{
+                //_launchCustomActivity();
                 await _smsConsentPlugin.initializeSmsConsent("OtpSMS");
                 _receivedSms = await _smsConsentPlugin.getOtpSms();
                 setState(() {
@@ -72,9 +81,11 @@ class _MyAppState extends State<MyApp> {
                 });
               }, child: const Text("Listen Otp")),
               TextButton(onPressed: (){
+                //_disposeActivity();
                 _smsConsentPlugin.disposeSmsConsent();
               }, child: const Text("Dispose ListenOtp")),
-              if(_receivedSms!=null)Text(_receivedSms!)
+              if(_receivedSms!=null)Text(_receivedSms!),
+              if(_phoneNumber!=null)Text(_phoneNumber!)
             ],
           ),
         ),
