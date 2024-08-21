@@ -23,6 +23,11 @@ class MethodChannelGetSmsOtpConsent extends GetSmsOtpConsentPlatform {
       debugPrint("Failed to start sms consent $e");
     }
   }
+  @override
+  Future<bool?> controlSimCard() async{
+    if(Platform.isIOS)return null;
+    return await methodChannel.invokeMethod<bool>('isSimSupport');
+  }
 
   @override
   Future<void> disposeSmsConsent() async{

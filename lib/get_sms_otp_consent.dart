@@ -14,4 +14,7 @@ class GetSmsOtpConsent {
   Future<String?> getPhoneNumber() {
     return GetSmsOtpConsentPlatform.instance.getPhoneNumber();
   }
+  Future<String?> controlSimCard() {
+    return GetSmsOtpConsentPlatform.instance.getPhoneNumber();
+  }
 }

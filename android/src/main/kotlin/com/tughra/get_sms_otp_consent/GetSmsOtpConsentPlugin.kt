@@ -27,7 +27,7 @@ class GetSmsOtpConsentPlugin: FlutterPlugin, ActivityAware,MethodCallHandler {
   private var activity: Activity? = null
   private val  channelName: String = "get_sms_otp_consent"
   private lateinit var channel : MethodChannel
-  private lateinit var methodResault : MethodChannel.Result
+  private lateinit var methodResault : Result
   private var smsManager: SmsConsentManager? = null
   private val activityResultListener: PluginRegistry.ActivityResultListener =
     PluginRegistry.ActivityResultListener { requestCode, resultCode, data ->
@@ -85,7 +85,7 @@ class GetSmsOtpConsentPlugin: FlutterPlugin, ActivityAware,MethodCallHandler {
       if(!isSimSupport())result.error("ERROR_START_SMS_CONSENT", "Can't start sms consent","No SIM")
       else{
         val title:String =  call.arguments as String
-        initializeSmsManager(title,result)
+        initializeSmsManager(title)
         result.success(null)
         //  println("SmsConsentPlugin startListenOtp $title")
       }
@@ -120,7 +120,7 @@ class GetSmsOtpConsentPlugin: FlutterPlugin, ActivityAware,MethodCallHandler {
 
     //println("SmsConsentPlugin onDetachedFromEngine")
   }
-  private fun initializeSmsManager(smsTitle: String,result:Result){
+  private fun initializeSmsManager(smsTitle: String){
     smsManager = SmsConsentManager(this.activity!!)
     smsManager!!.initialize(smsTitle)
     smsManager!!.startListeningForSms()

@@ -35,4 +35,7 @@ abstract class GetSmsOtpConsentPlatform extends PlatformInterface {
   Future<String?> getPhoneNumber() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+  Future<bool?> controlSimCard() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
 }
