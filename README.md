@@ -5,9 +5,11 @@ Flutter plugin to provide SMS code autofill support.
 If you want to avoid including any 11-character hash strings in your SMS messages, this plugin can help.
 While iOS offers SMS autofill functionality natively, Android requires this package to achieve the same behavior.
 SmsConsentAPI automatically requests permission to read the otp code.
-<p align="center">
-  <img src="https://github.com/Tughra/SmsConsentFlutterPlugin/blob/master/example/Screenshot_20240819_164610.png" width="400"/>
-</p>
+<div style="display:flex; justify-content: space-between;">
+<img src="https://github.com/Tughra/SmsConsentFlutterPlugin/blob/master/example/Screenshot_20240819_164610.png" width="400"/>
+<img src="https://github.com/Tughra/SmsConsentFlutterPlugin/blob/master/example/Screenshot_20240821_092524.png" width="400"/>
+</div>
+
 
 ## How to install
 
