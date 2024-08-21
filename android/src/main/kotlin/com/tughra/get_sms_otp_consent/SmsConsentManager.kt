@@ -1,4 +1,5 @@
 package com.tughra.get_sms_otp_consent
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context

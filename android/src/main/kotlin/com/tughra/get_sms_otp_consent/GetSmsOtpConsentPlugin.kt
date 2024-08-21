@@ -1,6 +1,5 @@
 package com.tughra.get_sms_otp_consent
 
-import android.R.attr
 import android.app.Activity
 import android.content.Context
 import android.telephony.TelephonyManager
@@ -20,7 +19,7 @@ import io.flutter.plugin.common.PluginRegistry
 
 
 /** SmsConsentPlugin */
-class SmsConsentPlugin: FlutterPlugin, ActivityAware,MethodCallHandler {
+class GetSmsOtpConsentPlugin: FlutterPlugin, ActivityAware,MethodCallHandler {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
