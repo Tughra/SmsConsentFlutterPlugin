@@ -1,7 +1,8 @@
 name: get_sms_otp_consent
 description: "A Flutter plugin to provide SMS code auto-retrieval and device's phone number extraction"
 version: 0.0.1
-homepage:
+homepage: https://github.com/Tughra/SmsConsentFlutterPlugin.git
+repository: https://github.com/Tughra/SmsConsentFlutterPlugin.git
 
 environment:
   sdk: '>=3.4.4 <4.0.0'

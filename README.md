@@ -48,7 +48,7 @@ To use the latest changes:
 
 Import this class
 ```dart
-import 'package:sms_consent/sms_consent.dart';
+import 'package:get_sms_otp_consent/get_sms_otp_consent.dart';
 ```
 
 ```dart
