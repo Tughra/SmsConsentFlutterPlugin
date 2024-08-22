@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_sms_otp_consent/get_sms_otp_consent_method_channel.dart';
+import 'package:get_sms_otp_consent/src/get_sms_otp_consent_method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
               TextButton(onPressed: ()async{
                 //_launchCustomActivity();
                 await _smsConsentPlugin.initializeSmsConsent("OtpSMS");
-                _receivedSms = await _smsConsentPlugin.getOtpSms();
+                _receivedSms = await _smsConsentPlugin.getOtpSmsMessage();
                 setState(() {
 
                 });

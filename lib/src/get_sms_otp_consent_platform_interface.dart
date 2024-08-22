@@ -1,5 +1,4 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-
 import 'get_sms_otp_consent_method_channel.dart';
 
 abstract class GetSmsOtpConsentPlatform extends PlatformInterface {
