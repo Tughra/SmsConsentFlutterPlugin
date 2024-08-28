@@ -6,8 +6,8 @@ If you want to avoid including any 11-character hash strings in your SMS message
 While iOS offers SMS autofill functionality natively, Android requires this package to achieve the same behavior.
 SmsConsentAPI automatically requests permission to read the otp code.
 <div style="display:flex; justify-content: space-between;">
-<img src="https://github.com/Tughra/SmsConsentFlutterPlugin/raw/master/example/Screenshot_20240819_164610.png" width="400"/>
-<img src="https://github.com/Tughra/SmsConsentFlutterPlugin/raw/master/example/Screenshot_20240821_092524.png" width="400"/>
+<img src="https://github.com/Tughra/SmsConsentFlutterPlugin/raw/master/example/Screenshot_20240819_164610.png" width="300"/>
+<img src="https://github.com/Tughra/SmsConsentFlutterPlugin/raw/master/example/Screenshot_20240821_092524.png" width="300"/>
 </div>
 
 

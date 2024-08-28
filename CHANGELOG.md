@@ -7,3 +7,7 @@
 ## [0.0.3 + 1]
 
 *  Edited readme.
+
+## [0.0.3 + 2]
+
+*  Fixed stop listen otp method.
