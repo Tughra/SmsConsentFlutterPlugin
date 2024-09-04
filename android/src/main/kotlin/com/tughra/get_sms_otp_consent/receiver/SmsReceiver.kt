@@ -7,13 +7,15 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
 
-class SmsReceiver: BroadcastReceiver() {
+class SmsReceiver : BroadcastReceiver() {
 
     var smsBroadcastReceiverListener: SmsBroadcastReceiverListener? = null
 
-    override fun onReceive(context: Context?, intent: Intent?) {
 
-        if (intent?.action == SmsRetriever.SMS_RETRIEVED_ACTION) {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        //println("SmsReceiver onReceive => ${intent?.`package`}")
+        //intent.scheme?.startsWith("com.google.android.gms") == true
+        if (intent?.action == SmsRetriever.SMS_RETRIEVED_ACTION ) { // Kaynak paket kontrolü
 
             val extras = intent.extras
             val smsRetrieverStatus: Status? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -43,7 +45,6 @@ class SmsReceiver: BroadcastReceiver() {
             }
         }
     }
-
     /**
      * Sms Broadcast Receiver Listener
      */
@@ -58,3 +59,4 @@ class SmsReceiver: BroadcastReceiver() {
         fun onFailure()
     }
 }
+

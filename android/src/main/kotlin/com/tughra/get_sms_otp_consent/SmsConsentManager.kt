@@ -16,8 +16,6 @@ import io.flutter.plugin.common.MethodChannel
 
 
 class SmsConsentManager (private val activity: Activity) {
-    private val otpResponseCode = 1001
-    val CREDENTIAL_PICKER_REQUEST = 1
 
     fun initialize(smsTitle: String) {
         val client: SmsRetrieverClient = SmsRetriever.getClient(activity)
@@ -30,6 +28,7 @@ class SmsConsentManager (private val activity: Activity) {
     // Interface to handle success and failure callbacks
     interface SmsListener {
         fun onSmsReceived(message: String)
+        //fun onPhoneReceived(message: String)
         fun onSmsRetrievalFailed()
     }
 
@@ -74,17 +73,38 @@ class SmsConsentManager (private val activity: Activity) {
     }
 
 
+
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     fun startListeningForSms() {
+        val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+        //intentFilter.addAction("com.google.android.gms.auth.api.phone.SMS_RETRIEVED") // Add specific action for SmsRetriever
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            activity.registerReceiver(smsReceiver, intentFilter,
+                SmsRetriever.SEND_PERMISSION,null,Context.RECEIVER_EXPORTED)
+        } else {
+            activity.registerReceiver(smsReceiver, intentFilter)
+        }
         smsReceiver.smsBroadcastReceiverListener =
-            object : SmsReceiver.SmsBroadcastReceiverListener {
-
+            object: SmsReceiver.SmsBroadcastReceiverListener{
                 override fun onSuccess(intent: Intent?) {
-                    if (intent != null) {
-                        val message: String = extractSmsFromIntent(intent)
-                        smsListener?.onSmsReceived(message)
-                        activity.startActivityForResult(intent,otpResponseCode)
+                    /*
+                    val messageIntent = extras.getParcelable<Intent>(SmsRetriever.EXTRA_CONSENT_INTENT,Intent::class.java)
+                     */
+                    val senderPackageName = intent?.`package`
+                    if (intent != null && senderPackageName == "com.google.android.gms") {
+                        // Check intent origin
+                        //println("SmsConsentManager senderPackageName => ${senderPackageName}")
+                        // Extract message and validate
+                        //intent.`package`="com.google.android.gms"
+                        //intent.setAction(SmsRetriever.SMS_RETRIEVED_ACTION)
+                        //intent.setFlags(90)
+                        //val message = extractSmsFromIntent(intent)
+                        // Process valid OTP
+                        //println("SmsConsentManager message => $message")
+                        //smsListener?.onSmsReceived(message)
+                        //activity.startActivity(intent);
+                        activity.startActivityForResult(intent, SMS_CONSENT_REQUEST)
                     } else {
                         smsListener?.onSmsRetrievalFailed()
                     }
@@ -94,33 +114,17 @@ class SmsConsentManager (private val activity: Activity) {
                     smsListener?.onSmsRetrievalFailed()
                 }
             }
-        val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            activity.registerReceiver(
-                smsReceiver, intentFilter,
-                Context.RECEIVER_EXPORTED
-            )
-        }
-        else {
-            activity.registerReceiver(smsReceiver, intentFilter)
-        }
     }
 
     fun stopListeningForSms() {
         activity.unregisterReceiver(smsReceiver)
     }
-
+    companion object {
+        const val SMS_CONSENT_REQUEST = 2
+        const val CREDENTIAL_PICKER_REQUEST = 1
+    }
     private fun extractSmsFromIntent(intent: Intent): String {
-        val extras = intent.extras ?: return ""
-        val message = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            extras.getParcelable(SmsRetriever.EXTRA_CONSENT_INTENT, Intent::class.java)
-                ?.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
-        } else {
-            @Suppress("DEPRECATION")
-            extras.getParcelable<Intent>(SmsRetriever.EXTRA_CONSENT_INTENT)
-                ?.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
-        }
-        return message ?: ""
+        val message = intent.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE) ?: return ""
+        return message
     }
 }

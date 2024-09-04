@@ -28,19 +28,21 @@ class GetSmsOtpConsentPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
     private val channelName: String = "get_sms_otp_consent"
     private lateinit var channel: MethodChannel
     private lateinit var methodResault: Result
+    private lateinit var context: Context
     private var smsManager: SmsConsentManager? = null
     private val activityResultListener: PluginRegistry.ActivityResultListener =
-        PluginRegistry.ActivityResultListener { requestCode, resultCode, data ->
+        PluginRegistry.ActivityResultListener { requestCode, resultCode, intent ->
             try {
-                if (requestCode == 1001 && resultCode == RESULT_OK && data != null) {
-                    val message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
+
+                if (resultCode == RESULT_OK && requestCode == SmsConsentManager.SMS_CONSENT_REQUEST && intent != null) {
+                    val message = intent.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
                     // println("onActivityResult message $message")
                     channel.invokeMethod("SmsReceived", message)
 
                 }
-                if (smsManager!=null&& requestCode == smsManager!!.CREDENTIAL_PICKER_REQUEST && resultCode == RESULT_OK && data != null) {
+                if (smsManager!=null&& requestCode == SmsConsentManager.CREDENTIAL_PICKER_REQUEST && resultCode == RESULT_OK && intent != null) {
                     val phoneNumber =
-                        Identity.getSignInClient(activity!!).getPhoneNumberFromIntent(data)
+                        Identity.getSignInClient(activity!!).getPhoneNumberFromIntent(intent)
                     methodResault.success(phoneNumber)
                 }
             } catch (e: Exception) {
@@ -48,9 +50,9 @@ class GetSmsOtpConsentPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
             }
             false
         }
-
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         // Activity'ye bağlandığında yapılacak işlemler
+
         activity = binding.getActivity()
         binding.addActivityResultListener(activityResultListener)
 
@@ -75,6 +77,7 @@ class GetSmsOtpConsentPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         setupChannel(flutterPluginBinding.binaryMessenger)
+        context = flutterPluginBinding.applicationContext
         //println("SmsConsentPlugin onAttachedToEngine")
     }
 
@@ -93,12 +96,12 @@ class GetSmsOtpConsentPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
             else {
                 val title: String = call.arguments as String
                 initializeSmsManager(title)
-                 result.success(null)
+                result.success(null)
                 //  println("SmsConsentPlugin startListenOtp $title")
             }
 
         } else if (call.method == "isSimSupport") {
-             result.success(isSimSupport())
+            result.success(isSimSupport())
         } else if (call.method == "requestHint") {
             methodResault = result
             if (!isSimSupport()) return result.error(
@@ -108,13 +111,13 @@ class GetSmsOtpConsentPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
             )
             else {
                 if (smsManager == null) smsManager = SmsConsentManager(this.activity!!)
-                 smsManager!!.requestHint(result)
+                smsManager!!.requestHint(result)
             }
         } else if (call.method == "stopListenOtp") {
             disposeSmsManager()
-             result.success(null)
+            result.success(null)
         } else {
-             result.notImplemented()
+            result.notImplemented()
         }
     }
 
@@ -132,11 +135,10 @@ class GetSmsOtpConsentPlugin : FlutterPlugin, ActivityAware, MethodCallHandler {
         /*
          smsManager!!.setSmsListener(object : SmsConsentManager.SmsListener {
              override fun onSmsReceived(message: String) {
-                  result.success(null)
+                 channel.invokeMethod("SmsReceived", message)
              }
              override fun onSmsRetrievalFailed() {
-                 result.error("ERROR_START_SMS_RETRIEVER", "Can't start sms retriever",null);
-
+                 channel.invokeMethod("SmsReceived", null)
              }
          })
          */
